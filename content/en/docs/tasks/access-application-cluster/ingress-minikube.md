@@ -141,12 +141,13 @@ The following file is an Ingress resource that sends traffic to your Service via
           name: example-ingress
           annotations:
             nginx.ingress.kubernetes.io/rewrite-target: /$1
+            nginx.ingress.kubernetes.io/app-root: /index.html
         spec:
          rules:
          - host: hello-world.info
            http:
              paths:
-             - path: /(.+)
+             - path: /|/(.+)
                backend:
                  serviceName: web
                  servicePort: 8080
@@ -254,7 +255,7 @@ The following file is an Ingress resource that sends traffic to your Service via
 1. Access the 1st version of the Hello World app.
 
     ```shell
-    curl hello-world.info
+    curl -L hello-world.info
     ```
 
     Output:
